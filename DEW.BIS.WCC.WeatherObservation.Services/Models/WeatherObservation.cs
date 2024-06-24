@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DEW.BIS.WCC.WeatherObservation.Services.Models
 {
-    public record WeatherObservationModel
+    public class WeatherObservation
     {
 
     }
