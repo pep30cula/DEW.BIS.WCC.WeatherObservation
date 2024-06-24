@@ -10,4 +10,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DEW.BIS.WCC.WeatherObservation.Services\DEW.BIS.WCC.WeatherObservation.Services.csproj" />
+  </ItemGroup>
+
 </Project>
