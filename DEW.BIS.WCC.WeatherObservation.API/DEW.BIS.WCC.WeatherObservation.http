@@ -1,0 +1,6 @@
+@DEW.BIS.WCC.WeatherObservation_HostAddress = http://localhost:5147
+
+GET {{DEW.BIS.WCC.WeatherObservation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
