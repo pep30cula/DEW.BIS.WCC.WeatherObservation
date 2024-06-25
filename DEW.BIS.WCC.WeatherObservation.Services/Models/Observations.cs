@@ -8,6 +8,6 @@ namespace DEW.BIS.WCC.WeatherObservation.Services.Models
 {
     public class Observations
     {
-        public List<WeatherObservation>? Data { get; set; }
+        public List<WeatherObservationResponse>? Data { get; set; }
     }
 }

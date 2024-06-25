@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DEW.BIS.WCC.WeatherObservation.Services.Models
 {
-    public class WeatherObservation
+    public class WeatherObservationResponse
     {
         [JsonPropertyName("air_temp")]
         public float Temperature { get; set; }
