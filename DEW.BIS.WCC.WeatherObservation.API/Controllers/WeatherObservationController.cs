@@ -1,6 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using DEW.BIS.WCC.WeatherObservation.Services;
 using DEW.BIS.WCC.WeatherObservation.Services.Services;
+using DEW.BIS.WCC.WeatherObservation.API.DTO;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
 {
@@ -9,20 +10,22 @@ namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
     public class WeatherObservationController : ControllerBase
     {
         //private readonly ILogger<WeatherObservationController> _logger;
+        private readonly IMapper _mapper;
 
-        public WeatherObservationController(ILogger<WeatherObservationController> logger)
+        public WeatherObservationController(ILogger<WeatherObservationController> logger, IMapper mapper)
         {
             //_logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public async Task<object> Get()
+        public async Task<List<WeatherObservationDto>> Get()
         {
             //_logger.LogInformation("INFORMATION IS LOGGED!!");
             var weatherServices = new WeatherObservationService();
             var stationWeather = await weatherServices.GetStationWeather(94672);
 
-            return stationWeather?.Data;
+            return _mapper.Map<List<WeatherObservation.Services.Models.WeatherObservation>, List<WeatherObservationDto>>(stationWeather?.Observations?.Data);
         }
     }
 }

@@ -14,16 +14,17 @@ namespace DEW.BIS.WCC.WeatherObservation.Services.Services
     {
         private const string BaseAddress = "http://www.bom.gov.au/fwo/IDS60901/IDS60901.";
 
-        public async Task<Observations> GetStationWeather(int stationId)
+        public async Task<WeatherResponse> GetStationWeather(int stationId)
         {
+            var result = new WeatherResponse();
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Accept.Clear();
+                //client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await client.GetAsync(BaseAddress + stationId + ".json");
                 if (response.IsSuccessStatusCode)
                 {
-                    var obj = await response.Content.ReadFromJsonAsync<WeatherResponse>();
+                    result = await response.Content.ReadFromJsonAsync<WeatherResponse>();
                 }
                 else
                 {
@@ -31,9 +32,7 @@ namespace DEW.BIS.WCC.WeatherObservation.Services.Services
                 }
             }
 
-
-
-            return null;
+            return result;
         }
     }
 }
