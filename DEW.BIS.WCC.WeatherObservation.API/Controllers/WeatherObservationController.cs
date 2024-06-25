@@ -19,11 +19,16 @@ namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public async Task<List<WeatherObservationDto>> Get()
+        public async Task<List<WeatherObservationDto>> GetStationWeather(int stationId = 94672)
         {
+            if (stationId < 90000 || stationId > 99999)
+            {
+                throw new ArgumentException("The StationId must be between 90000 and 99999.");
+            }
+
             //_logger.LogInformation("INFORMATION IS LOGGED!!");
             var weatherServices = new WeatherObservationService();
-            var stationWeather = await weatherServices.GetStationWeather(94672);
+            var stationWeather = await weatherServices.GetStationWeather(stationId);
 
             return _mapper.Map<List<WeatherObservation.Services.Models.WeatherObservation>, List<WeatherObservationDto>>(stationWeather?.Observations?.Data);
         }
