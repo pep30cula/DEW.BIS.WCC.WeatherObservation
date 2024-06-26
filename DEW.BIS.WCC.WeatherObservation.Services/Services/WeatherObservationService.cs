@@ -1,16 +1,11 @@
-﻿using DEW.BIS.WCC.WeatherObservation.Services.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using DEW.BIS.WCC.WeatherObservation.Shared.Interfaces;
+using DEW.BIS.WCC.WeatherObservation.Shared.Models;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace DEW.BIS.WCC.WeatherObservation.Services.Services
 {
-    public class WeatherObservationService
+    public class WeatherObservationService : IWeatherObservationService
     {
         private const string BaseAddress = "http://www.bom.gov.au/fwo/IDS60901/IDS60901.";
 
@@ -28,7 +23,7 @@ namespace DEW.BIS.WCC.WeatherObservation.Services.Services
                 }
                 else
                 {
-                    
+
                 }
             }
 

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DEW.BIS.WCC.WeatherObservation.Services\DEW.BIS.WCC.WeatherObservation.Services.csproj" />
+    <ProjectReference Include="..\DEW.BIS.WCC.WeatherObservation.Shared\DEW.BIS.WCC.WeatherObservation.Shared.csproj" />
   </ItemGroup>
 
 </Project>
