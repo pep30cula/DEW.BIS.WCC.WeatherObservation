@@ -17,7 +17,8 @@ namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IWeatherObservationService _weatherObservationService;
 
-        public WeatherObservationController(ILogger<WeatherObservationController> logger, IMapper mapper,
+        public WeatherObservationController(ILogger<WeatherObservationController> logger,
+            IMapper mapper,
             IWeatherObservationService weatherObservationService)
         {
             //_logger = logger;
