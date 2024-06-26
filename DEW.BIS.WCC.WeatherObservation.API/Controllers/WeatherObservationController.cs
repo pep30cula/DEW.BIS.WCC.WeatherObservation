@@ -1,4 +1,3 @@
-using DEW.BIS.WCC.WeatherObservation.Services.Services;
 using DEW.BIS.WCC.WeatherObservation.API.DTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;

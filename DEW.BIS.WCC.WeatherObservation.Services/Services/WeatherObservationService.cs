@@ -9,7 +9,6 @@ namespace DEW.BIS.WCC.WeatherObservation.Services.Services
 {
     public class WeatherObservationService : IWeatherObservationService
     {
-        private const string BaseAddress = "http://www.bom.gov.au/fwo/IDS60901/IDS60901.";
         private readonly IOptions<BaseAddressSettings> _baseAddressSettings;
 
         public WeatherObservationService(IOptions<BaseAddressSettings> baseAddressSettings)
