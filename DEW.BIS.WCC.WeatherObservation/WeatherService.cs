@@ -14,7 +14,8 @@ namespace DEW.BIS.WCC.WeatherObservation
 
         public async Task GetAverageWeather()
         {
-            Console.WriteLine("Using this application you could get the last 3 days average temperature of provided station id of Adelaide area");
+            ConsoleHelper.WriteToConsole("Using this application you could get the last 3 days average temperature of provided station id of Adelaide area", ConsoleColor.DarkBlue);
+            Console.WriteLine();
 
             while (true)
             {
@@ -59,10 +60,16 @@ namespace DEW.BIS.WCC.WeatherObservation
                 var stationWeather = await _weatherObservationService.GetStationWeather(stationId);
                 var averageTemperature = stationWeather.Observations?.Data?.CalculateThreeDaysWeatherAverage(TemperatureDegreeType.Celsius);
 
-                var resultMessage = (stationWeather.Observations != null) ?
-                    "The average of last 72 hours of staion id " + stationId + " of station " + stationWeather?.Observations?.Data[0].StationName + " is: " + averageTemperature :
-                    "There is no result for the provided station id or the station id is not correct.";
-                Console.WriteLine(resultMessage);
+                if (stationWeather?.Observations != null || averageTemperature != null)
+                {
+                    ConsoleHelper.WriteToConsole("The average of last 72 hours of staion id " + stationId + " of station " + stationWeather?.Observations?.Data[0].StationName + " is: ");
+                    ConsoleHelper.WriteToConsole(Convert.ToString(averageTemperature), ConsoleColor.Black, ConsoleColor.DarkCyan);
+                }
+                else
+                {
+                    ConsoleHelper.WriteToConsole("There is no result for the provided station id or the station id is not correct.");
+                }
+
                 Console.WriteLine();
             }
         }
