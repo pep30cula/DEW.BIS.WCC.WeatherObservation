@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace DEW.BIS.WCC.WeatherObservation.Services.Models
 {
-    public class Observations
+    public class WeatherResponse
     {
-        public List<WeatherObservationResponse>? Data { get; set; }
+        public Observations? Observations { get; set; }
     }
 }
