@@ -34,7 +34,6 @@ namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
                 throw new ArgumentException("The StationId must be between 90000 and 99999.");
             }
 
-            _logger.LogCritical("INFORMATION IS LOGGED!!");
             var stationWeather = await _weatherObservationService.GetStationWeather(stationId);
 
             return _mapper.Map<List<WeatherObservationResponse>, List<WeatherObservationDto>>(stationWeather?.Observations?.Data);
