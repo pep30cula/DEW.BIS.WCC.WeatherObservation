@@ -2,7 +2,8 @@ using DEW.BIS.WCC.WeatherObservation.API.Mappings;
 using DEW.BIS.WCC.WeatherObservation.Services.Services;
 using DEW.BIS.WCC.WeatherObservation.Shared.Interfaces;
 using DEW.BIS.WCC.WeatherObservation.Shared.Settings;
-using Microsoft.Extensions.Configuration;
+using Serilog;
+using Serilog.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +11,10 @@ builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(WeatherObservationMappingProfile));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//builder.Services.AddSerilog();
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
-//Settings
 builder.Services.Configure<BaseAddressSettings>(builder.Configuration.GetSection("BaseAddress"));
 
 builder.Services.AddTransient(typeof(IWeatherObservationService), typeof(WeatherObservationService));
@@ -24,8 +27,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSerilogRequestLogging();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

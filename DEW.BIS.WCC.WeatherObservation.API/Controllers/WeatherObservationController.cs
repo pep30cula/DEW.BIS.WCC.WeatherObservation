@@ -13,7 +13,7 @@ namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
     [Route("api/[controller]/[action]")]
     public class WeatherObservationController : ControllerBase
     {
-        //private readonly ILogger<WeatherObservationController> _logger;
+        private readonly ILogger<WeatherObservationController> _logger;
         private readonly IMapper _mapper;
         private readonly IWeatherObservationService _weatherObservationService;
 
@@ -21,7 +21,7 @@ namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
             IMapper mapper,
             IWeatherObservationService weatherObservationService)
         {
-            //_logger = logger;
+            _logger = logger;
             _mapper = mapper;
             _weatherObservationService = weatherObservationService;
         }
@@ -34,7 +34,7 @@ namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
                 throw new ArgumentException("The StationId must be between 90000 and 99999.");
             }
 
-            //_logger.LogInformation("INFORMATION IS LOGGED!!");
+            _logger.LogCritical("INFORMATION IS LOGGED!!");
             var stationWeather = await _weatherObservationService.GetStationWeather(stationId);
 
             return _mapper.Map<List<WeatherObservationResponse>, List<WeatherObservationDto>>(stationWeather?.Observations?.Data);
