@@ -34,8 +34,9 @@ namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
             }
 
             var stationWeather = await _weatherObservationService.GetStationWeather(stationId);
+            var result = _mapper.Map<List<WeatherObservationResponse>, List<WeatherObservationDto>>(stationWeather?.Observations?.Data);
 
-            return _mapper.Map<List<WeatherObservationResponse>, List<WeatherObservationDto>>(stationWeather?.Observations?.Data);
+            return result;
         }
 
         [HttpGet(Name = "GetStationAverageTemperature")]

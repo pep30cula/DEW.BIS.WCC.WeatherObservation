@@ -21,7 +21,6 @@ namespace DEW.BIS.WCC.WeatherObservation.Services.Services
             var result = new WeatherResponse();
             using (var client = new HttpClient())
             {
-                //client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await client.GetAsync(_baseAddressSettings.Value.WeatherService + stationId + ".json");
                 if (response.IsSuccessStatusCode)
@@ -30,7 +29,7 @@ namespace DEW.BIS.WCC.WeatherObservation.Services.Services
                 }
                 else
                 {
-
+                    throw new Exception("The HTTP request was not successful.");
                 }
             }
 

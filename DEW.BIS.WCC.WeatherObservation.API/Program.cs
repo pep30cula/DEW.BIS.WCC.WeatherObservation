@@ -2,6 +2,7 @@ using DEW.BIS.WCC.WeatherObservation.API.Mappings;
 using DEW.BIS.WCC.WeatherObservation.Services.Services;
 using DEW.BIS.WCC.WeatherObservation.Shared.Interfaces;
 using DEW.BIS.WCC.WeatherObservation.Shared.Settings;
+using Microsoft.AspNetCore.Diagnostics;
 using Serilog;
 using Serilog.Core;
 
@@ -28,6 +29,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler(a => a.Run(async context =>
+{
+    var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+    var exception = exceptionHandlerPathFeature?.Error;
+
+    await context.Response.WriteAsJsonAsync(new { error = exception?.Message });
+}));
 
 app.UseSerilogRequestLogging();
 app.UseAuthorization();
