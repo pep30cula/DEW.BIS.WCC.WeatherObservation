@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace DEW.BIS.WCC.WeatherObservation.Services.Models
+namespace DEW.BIS.WCC.WeatherObservation.Shared.Models
 {
     public class WeatherObservationResponse
     {

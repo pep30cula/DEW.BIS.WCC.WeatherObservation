@@ -1,4 +1,4 @@
-﻿using DEW.BIS.WCC.WeatherObservation.Services.Models;
+﻿using DEW.BIS.WCC.WeatherObservation.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

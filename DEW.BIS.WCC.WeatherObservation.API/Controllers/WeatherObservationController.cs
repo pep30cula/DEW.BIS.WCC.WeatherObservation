@@ -1,10 +1,10 @@
-using DEW.BIS.WCC.WeatherObservation.Services.Services;
 using DEW.BIS.WCC.WeatherObservation.API.DTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using DEW.BIS.WCC.WeatherObservation.Services.Extensions;
 using DEW.BIS.WCC.WeatherObservation.Services;
-using DEW.BIS.WCC.WeatherObservation.Services.Models;
+using DEW.BIS.WCC.WeatherObservation.Shared.Models;
+using DEW.BIS.WCC.WeatherObservation.Shared.Interfaces;
 
 namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
 {
@@ -12,13 +12,17 @@ namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
     [Route("api/[controller]/[action]")]
     public class WeatherObservationController : ControllerBase
     {
-        //private readonly ILogger<WeatherObservationController> _logger;
+        private readonly ILogger<WeatherObservationController> _logger;
         private readonly IMapper _mapper;
+        private readonly IWeatherObservationService _weatherObservationService;
 
-        public WeatherObservationController(ILogger<WeatherObservationController> logger, IMapper mapper)
+        public WeatherObservationController(ILogger<WeatherObservationController> logger,
+            IMapper mapper,
+            IWeatherObservationService weatherObservationService)
         {
-            //_logger = logger;
+            _logger = logger;
             _mapper = mapper;
+            _weatherObservationService = weatherObservationService;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -29,9 +33,7 @@ namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
                 throw new ArgumentException("The StationId must be between 90000 and 99999.");
             }
 
-            //_logger.LogInformation("INFORMATION IS LOGGED!!");
-            var weatherServices = new WeatherObservationService();
-            var stationWeather = await weatherServices.GetStationWeather(stationId);
+            var stationWeather = await _weatherObservationService.GetStationWeather(stationId);
 
             return _mapper.Map<List<WeatherObservationResponse>, List<WeatherObservationDto>>(stationWeather?.Observations?.Data);
         }
@@ -44,8 +46,7 @@ namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
                 throw new ArgumentException("The StationId must be between 90000 and 99999.");
             }
 
-            var weatherServices = new WeatherObservationService();
-            var stationWeather = await weatherServices.GetStationWeather(stationId);
+            var stationWeather = await _weatherObservationService.GetStationWeather(stationId);
 
             var averageTemperature = stationWeather.Observations?.Data?.CalculateThreeDaysWeatherAverage(temperatureDegreeType);
 

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DEW.BIS.WCC.WeatherObservation.API.DTO;
 using DEW.BIS.WCC.WeatherObservation.Services;
-using DEW.BIS.WCC.WeatherObservation.Services.Models;
+using DEW.BIS.WCC.WeatherObservation.Shared.Models;
 using DEW.BIS.WCC.WeatherObservation.Services.Extensions;
 
 namespace DEW.BIS.WCC.WeatherObservation.API.Mappings
