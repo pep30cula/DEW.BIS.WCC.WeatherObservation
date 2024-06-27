@@ -13,9 +13,10 @@ builder.Services.AddAutoMapper(typeof(WeatherObservationMappingProfile));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
-
+builder.Services.AddMemoryCache();
 
 builder.Services.Configure<BaseAddressSettings>(builder.Configuration.GetSection("BaseAddress"));
+builder.Services.Configure<CacheSettings>(builder.Configuration.GetSection("Cache"));
 
 builder.Services.AddTransient(typeof(IWeatherObservationService), typeof(WeatherObservationService));
 

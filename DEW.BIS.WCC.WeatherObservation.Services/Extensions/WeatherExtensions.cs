@@ -26,6 +26,11 @@ namespace DEW.BIS.WCC.WeatherObservation.Services.Extensions
             return Convert.ToSingle(((input * 9) / 5 + 32).ToString("0.0"));
         }
 
+        public static float ConvertFahrenheitToCelsius(this float input)
+        {
+            return Convert.ToSingle(((input - 32) * 5 / 9).ToString("0.0"));
+        }
+
         public static ushort ConvertKmhToMph(this ushort input)
         {
             return Convert.ToUInt16((0.6214 * input));
