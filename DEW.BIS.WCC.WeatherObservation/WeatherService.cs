@@ -1,5 +1,5 @@
-﻿using DEW.BIS.WCC.WeatherObservation.Services;
-using DEW.BIS.WCC.WeatherObservation.Services.Extensions;
+﻿using DEW.BIS.WCC.WeatherObservation.Services.Extensions;
+using DEW.BIS.WCC.WeatherObservation.Shared;
 using DEW.BIS.WCC.WeatherObservation.Shared.Interfaces;
 
 namespace DEW.BIS.WCC.WeatherObservation
@@ -62,11 +62,11 @@ namespace DEW.BIS.WCC.WeatherObservation
                     }
 
                     var stationWeather = await _weatherObservationService.GetStationWeather(stationId);
-                    var averageTemperature = stationWeather.Observations?.Data?.CalculateThreeDaysWeatherAverage(TemperatureDegreeType.Celsius);
+                    var averageTemperature = stationWeather.Observations?.Data?.CalculateThreeDaysWeatherAverage(TemperatureUnitType.Celsius);
 
                     if (stationWeather?.Observations != null || averageTemperature != null)
                     {
-                        ConsoleHelper.WriteToConsole("The average of last 72 hours of staion id " + stationId + " of station " + stationWeather?.Observations?.Data[0].StationName + " is: ");
+                        ConsoleHelper.WriteToConsole("The average of last 72 hours of station id " + stationId + " of station " + stationWeather?.Observations?.Data[0].StationName + " is: ");
                         ConsoleHelper.WriteToConsole(Convert.ToString(averageTemperature), ConsoleColor.Black, ConsoleColor.DarkCyan);
                     }
                     else

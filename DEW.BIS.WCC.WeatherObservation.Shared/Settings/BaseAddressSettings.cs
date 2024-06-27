@@ -1,7 +1,7 @@
 ﻿namespace DEW.BIS.WCC.WeatherObservation.Shared.Settings
 {
-    public class BaseAddressSettings
+    public record BaseAddressSettings
     {
-        public string? WeatherService { get; set; }
+        public string? WeatherService { get; init; }
     }
 }

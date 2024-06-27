@@ -2,13 +2,13 @@ using DEW.BIS.WCC.WeatherObservation.API.DTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using DEW.BIS.WCC.WeatherObservation.Services.Extensions;
-using DEW.BIS.WCC.WeatherObservation.Services;
 using DEW.BIS.WCC.WeatherObservation.Shared.Models;
 using DEW.BIS.WCC.WeatherObservation.Shared.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 using System.Globalization;
 using DEW.BIS.WCC.WeatherObservation.Shared.Settings;
 using Microsoft.Extensions.Options;
+using DEW.BIS.WCC.WeatherObservation.Shared;
 
 namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
 {
@@ -44,13 +44,13 @@ namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
             }
 
             var stationWeather = await _weatherObservationService.GetStationWeather(stationId);
-            var result = _mapper.Map<List<WeatherObservationResponse>, List<WeatherObservationDto>>(stationWeather?.Observations?.Data);
+            var result = _mapper.Map<List<ObservationData>, List<WeatherObservationDto>>(stationWeather?.Observations?.Data);
 
             return result;
         }
 
         [HttpGet(Name = "GetStationAverageTemperature")]
-        public async Task<WeatherAverageDto> GetStationAverageTemperature(int stationId = 94672, TemperatureDegreeType temperatureDegreeType = TemperatureDegreeType.Celsius)
+        public async Task<WeatherAverageDto> GetStationAverageTemperature(int stationId = 94672, TemperatureUnitType temperatureUnitType = TemperatureUnitType.Celsius)
         {
             var ss = _cacheSettings.Value.IsCacheEnabled;
             if (stationId < 90000 || stationId > 99999)
@@ -63,15 +63,15 @@ namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
                 DateTime.Now.Subtract(cachedWeatherAverage.LastUpdateDateTime).TotalMinutes < 30)
             {
                 var averageTemperature = cachedWeatherAverage.AverageTemperature;
-                if (cachedWeatherAverage.TemperatureDegreeType != temperatureDegreeType)
+                if (cachedWeatherAverage.TemperatureUnitType != temperatureUnitType)
                 {
-                    switch (temperatureDegreeType)
+                    switch (temperatureUnitType)
                     {
-                        case TemperatureDegreeType.Celsius:
+                        case TemperatureUnitType.Celsius:
                         default:
                             averageTemperature = averageTemperature.ConvertFahrenheitToCelsius();
                             break;
-                        case TemperatureDegreeType.Fahrenheit:
+                        case TemperatureUnitType.Fahrenheit:
                             averageTemperature = averageTemperature.ConvertCelsiusToFahrenheit();
                             break;
                     }
@@ -81,13 +81,13 @@ namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
                     AverageTemperature: averageTemperature,
                     StationName: cachedWeatherAverage.StationName,
                     LastUpdateDateTime: cachedWeatherAverage.LastUpdateDateTime,
-                    TemperatureDegreeType: temperatureDegreeType);
+                    TemperatureUnitType: temperatureUnitType);
             }
             else
             {
                 var stationWeather = await _weatherObservationService.GetStationWeather(stationId);
 
-                var averageTemperature = stationWeather.Observations?.Data?.CalculateThreeDaysWeatherAverage(temperatureDegreeType);
+                var averageTemperature = stationWeather.Observations?.Data?.CalculateThreeDaysWeatherAverage(temperatureUnitType);
 
                 if (averageTemperature == null)
                     return null;
@@ -96,7 +96,7 @@ namespace DEW.BIS.WCC.WeatherObservationAPI.Controllers
                     AverageTemperature: averageTemperature.Value,
                     StationName: stationWeather.Observations?.Data?.First().StationName,
                     LastUpdateDateTime: DateTime.ParseExact(stationWeather.Observations.Data.First().LocalDateTime, "yyyyMMddHHmmss", CultureInfo.InvariantCulture),
-                    TemperatureDegreeType: temperatureDegreeType);
+                    TemperatureUnitType: temperatureUnitType);
 
                 _memoryCache.Set(CacheKeys.AverageTemperatureCacheKey + stationId, result, TimeSpan.FromMinutes(30));
 

@@ -1,19 +1,15 @@
-﻿using DEW.BIS.WCC.WeatherObservation.Shared.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DEW.BIS.WCC.WeatherObservation.Shared;
+using DEW.BIS.WCC.WeatherObservation.Shared.Models;
 
 namespace DEW.BIS.WCC.WeatherObservation.Services.Extensions
 {
     public static class WeatherExtensions
     {
-        public static float CalculateThreeDaysWeatherAverage(this List<WeatherObservationResponse> input, TemperatureDegreeType temperatureDegreeType)
+        public static float CalculateThreeDaysWeatherAverage(this List<ObservationData> input, TemperatureUnitType temperatureDegreeType)
         {
             var averageTemperature = Convert.ToSingle(input?.Average(x => x.Temperature).ToString("0.0"));
 
-            if (temperatureDegreeType == TemperatureDegreeType.Fahrenheit)
+            if (temperatureDegreeType == TemperatureUnitType.Fahrenheit)
             {
                 averageTemperature = averageTemperature.ConvertCelsiusToFahrenheit();
             }

@@ -9,6 +9,6 @@ namespace DEW.BIS.WCC.WeatherObservation.Shared.Interfaces
 {
     public interface IWeatherObservationService
     {
-        Task<WeatherResponse> GetStationWeather(int stationId);
+        Task<WeatherObservationResponse> GetStationWeather(int stationId);
     }
 }

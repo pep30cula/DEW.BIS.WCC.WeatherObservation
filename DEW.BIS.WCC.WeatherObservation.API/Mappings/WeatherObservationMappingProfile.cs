@@ -10,7 +10,7 @@ namespace DEW.BIS.WCC.WeatherObservation.API.Mappings
     {
         public WeatherObservationMappingProfile()
         {
-            CreateMap<WeatherObservationResponse, WeatherObservationDto>()
+            CreateMap<ObservationData, WeatherObservationDto>()
                 .ForCtorParam(ctorParamName: "TemperatureInF", m => m.MapFrom(s => s.Temperature.ConvertCelsiusToFahrenheit()))
                 .ForCtorParam(ctorParamName: "WindSpeedInMph", m => m.MapFrom(s => s.WindSpeedInKmh.ConvertKmhToMph()));
         }

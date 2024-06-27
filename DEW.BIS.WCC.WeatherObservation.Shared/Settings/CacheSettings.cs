@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DEW.BIS.WCC.WeatherObservation.Shared.Settings
+﻿namespace DEW.BIS.WCC.WeatherObservation.Shared.Settings
 {
-    public class CacheSettings
+    public record CacheSettings
     {
-        public bool IsCacheEnabled { get; set; }
+        public bool IsCacheEnabled { get; init; }
     }
 }
